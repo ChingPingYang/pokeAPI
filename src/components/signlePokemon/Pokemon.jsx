@@ -31,8 +31,23 @@ const Pokemon = ({ match: { params }}) => {
     }, []);
 
     const handleSlide = (e) => {
-        setSprite(pre => pre + 1);
-        console.log(sprite)
+        if(e.target.id === "next"){
+            setSprite(pre => {
+                if(pre === 3) {
+                    return 0
+                } else {
+                    return pre + 1
+                }
+            });
+        } else if(e.target.id === "previous"){
+            setSprite(pre => {
+                if(pre === 0) {
+                    return 3
+                } else {
+                    return pre - 1
+                }
+            });
+        }
     }
 
     if(error) {
@@ -46,8 +61,8 @@ const Pokemon = ({ match: { params }}) => {
             <ContentWrap >
                 <ImgWrap >
                     <img src={pokemon.sprites[getSlideName(sprite)]} alt={pokemon.name}></img>
-                    <button className="slideNtn previous" onClick={handleSlide}>&#8592;</button>
-                    <button className="slideNtn next" onClick={handleSlide}>&#8594;</button>
+                    <button id="previous" className="slideNtn previous" onClick={handleSlide}>&#8592;</button>
+                    <button id="next" className="slideNtn next" onClick={handleSlide}>&#8594;</button>
                 </ImgWrap>
                 <h1>{capitalize(pokemon.name)}</h1>
                 {pokemon.types.map((type, index) => {
@@ -83,7 +98,6 @@ const ContentWrap = styled.div`
     background-color: white;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    
     h1 {
         font-size: 2.5rem;
     }
@@ -93,12 +107,10 @@ const ImgWrap = styled.div`
     width: 90%;
     position: relative;
     display: inline-block;
-    border: solid 1px red;
     overflow: hidden;
     margin-top: -200px;
     img {
         height: 16rem;
-        z-index: 1000;
         transition: 1s ease-in-out;
     }
     .slideNtn {
@@ -110,6 +122,12 @@ const ImgWrap = styled.div`
         color: ${props => props.theme.interactive};
         border-radius: 100%;
         border: solid 1px ${props => props.theme.interactive};
+        cursor: pointer;
+        transition: 0.2s ease-in-out;
+        :hover {
+            color: white;
+            background-color: ${props => props.theme.interactive};
+        }
     }
     .previous {
         left: 0px;
