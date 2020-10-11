@@ -1,5 +1,7 @@
 import React ,{ useEffect, useState }from 'react';
 import { getPokemons, getOnePokemon } from '../../util/pokemonAPI';
+import styled from 'styled-components';
+import Card from './Card';
 
 
 const Landing = () => {
@@ -44,12 +46,61 @@ const Landing = () => {
 
     if(loading) return <h1>Loading...</h1>
     return(
-        <>
-            {!loading && pokemons.map(pokemon => <h1>{pokemon.name}</h1>)}
+        <Wrapper>
+          <CardsWrap>
+            {!loading && pokemons.map(pokemon => <Card key={pokemon.id} pokemon={pokemon}>{pokemon.name}</Card>)}
+          </CardsWrap>
+          <PaginationWrap>
             {!loading && previousPage && <button onClick={handlePrevious}>Previous</button>}
             {!loading && nextPage && <button onClick={handleNext}>Next</button>}
-        </>
+          </PaginationWrap>
+        </Wrapper>
     )
 }
+
+
+const Wrapper = styled.main`
+  width: 100%;
+  display: flex;
+  padding: 20px 3rem;
+  flex-direction: column;
+  align-items: center;
+  border:solid 1px red;
+`
+
+const CardsWrap = styled.section`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border:solid 1px red;
+`
+
+
+
+const PaginationWrap = styled.section`
+  width: 70%;
+  /* border: solid 1px red; */
+  display: flex;
+  justify-content: space-around;
+  button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: ${props => props.theme.interactive};
+    border: solid 2px ${props => props.theme.interactive};
+    box-shadow: 0px 3px 8px -3px ${props => props.theme.interactive};
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    :hover {
+      color: white;
+      background-color: ${props => props.theme.interactive};
+    }
+  }
+`
+
+
 
 export default Landing;

@@ -1,5 +1,6 @@
 import React , { useState, useEffect }from 'react';
 import { getPokemons } from '../util/pokemonAPI';
+import styled from 'styled-components';
 
 const Nav = () => {
     const [search, setSearch] = useState("");
@@ -29,11 +30,17 @@ const Nav = () => {
         setSearch(e.target.value);
     }
     return (
-        <>
+        <Wrapper>
             <input type="text" onChange={handleOnchange} value={search}/>
             {match.length > 0 && match.map(pokemon => (<h1>{pokemon.name}</h1>))}
-        </>
+        </Wrapper>
     )
 }
+
+const Wrapper = styled.nav`
+    width: 100%;
+    height: 60px;
+    background-color: white;
+`
 
 export default Nav;

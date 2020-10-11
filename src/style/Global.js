@@ -11,11 +11,13 @@ const Global = createGlobalStyle`
         font-family: 'Rubik', sans-serif;
     }
     body, html{
-        width: 100vh;
+        width: 100vw;
         height: 100vh;
+        background-color: #F2F4F4;
     }
     #root {
-        width: 100vh;
+        width: 100%;
+        height: 100%;
     }
 `
 export default Global;
