@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getOnePokemon } from '../../util/pokemonAPI';
 import styled from 'styled-components';
-import { capitalize } from '../../util/utilFuns';
-import icon from '../../icons/bug.svg';
+import { capitalize, getSlideName } from '../../util/utilFuns';
+import Stats from './Stats';
 
 const Pokemon = ({ match: { params }}) => {
-    
+    const [sprite, setSprite ] = useState(0);
     const [pokemon, setPokemon] = useState();
     const [loading ,setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -30,6 +30,11 @@ const Pokemon = ({ match: { params }}) => {
         }
     }, []);
 
+    const handleSlide = (e) => {
+        setSprite(pre => pre + 1);
+        console.log(sprite)
+    }
+
     if(error) {
         return <Loading>{error}</Loading>
       } else if(loading){
@@ -40,7 +45,9 @@ const Pokemon = ({ match: { params }}) => {
         <Wrapper type={pokemon.types[0].type.name} typeDim={`${pokemon.types[0].type.name}Dim`}>
             <ContentWrap >
                 <ImgWrap >
-                    <img src={pokemon.sprites.front_default} alt={pokemon.name}></img>
+                    <img src={pokemon.sprites[getSlideName(sprite)]} alt={pokemon.name}></img>
+                    <button className="slideNtn previous" onClick={handleSlide}>&#8592;</button>
+                    <button className="slideNtn next" onClick={handleSlide}>&#8594;</button>
                 </ImgWrap>
                 <h1>{capitalize(pokemon.name)}</h1>
                 {pokemon.types.map((type, index) => {
@@ -53,20 +60,7 @@ const Pokemon = ({ match: { params }}) => {
                         </Type>
                     )
                 })}
-                <StatsWrap >
-                    <div className="box">
-                        <h3>{pokemon.id}</h3>
-                        <h4 style={{marginLeft:"6px"}}>No.</h4>
-                    </div>
-                    <div className="box">
-                        <h3 >{pokemon.weight / 10}<span>kg</span></h3>
-                        <h4>Weight</h4>
-                    </div>
-                    <div className="box">
-                        <h3>{pokemon.height / 10}<span>m</span></h3>
-                        <h4>Height</h4>
-                    </div>
-                </StatsWrap>
+                <Stats pokemon={pokemon} />
             </ContentWrap>
         </Wrapper> 
     )
@@ -77,36 +71,56 @@ const Wrapper = styled.div`
     flex-grow: 1;
     display: flex;
     align-items: flex-end;
-    padding: 0px 3rem;
+    padding: 0px 1rem;
     background-image: linear-gradient(to left bottom,${props=> props.theme[props.type]}, ${props=> props.theme[props.typeDim]});
     
 `
 
 const ContentWrap = styled.div`
-    height: 60%;
+    height: 58%;
     width: 100%;
     text-align: center;
     background-color: white;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    
     h1 {
         font-size: 2.5rem;
     }
 `
 const ImgWrap = styled.div`
-    height: 10%;
-    width: 100%;
+    height: 250px;
+    width: 90%;
+    position: relative;
+    display: inline-block;
     border: solid 1px red;
-    display: flex;
-    justify-content: center;
+    overflow: hidden;
+    margin-top: -200px;
     img {
         height: 16rem;
-        margin-top: -200px;
         z-index: 1000;
+        transition: 1s ease-in-out;
+    }
+    .slideNtn {
+        all: unset;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 5px;
+        color: ${props => props.theme.interactive};
+        border-radius: 100%;
+        border: solid 1px ${props => props.theme.interactive};
+    }
+    .previous {
+        left: 0px;
+    }
+    .next {
+        right: 0px;
     }
 `
 const Type = styled.div`
     display: inline-block;
     margin: 15px 10px 30px 10px;
-    /* border: solid 1px red; */
     
     .icon {
         width: 3.3rem;
@@ -126,36 +140,6 @@ const Type = styled.div`
         font-weight: 300;
     }
 `
-const StatsWrap = styled.div`
-    width: 100%;
-    height: 30px;
-    display: flex;
-    
-    .box {
-        flex:1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        h3 {
-            font-weight: 400;
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            span {
-                margin-left: 2px;
-            }
-        }
-        h4,span {
-            font-weight: 400;
-            font-size: 0.8rem;
-            color: ${props => props.theme.gray};
-        }
-        :nth-child(2) {
-            border-left: solid 1px ${props => props.theme.border};
-            border-right: solid 1px ${props => props.theme.border};
-        }
-    }
-`
-
 
 const Loading = styled.h1`
   color: ${props => props.theme.gray};
