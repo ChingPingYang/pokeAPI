@@ -1,5 +1,8 @@
 export const theme = {
     interactive: "#FF328C",
+    black: "#21232B",
+    gray: "#797979",
+    border: "#BFBFBF",
 
     bug: "#92BC2C",
     bugDim: "#2DA038",

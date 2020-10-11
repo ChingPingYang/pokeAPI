@@ -44,7 +44,7 @@ const Landing = () => {
     
     }
 
-    if(loading) return <h1>Loading...</h1>
+    if(loading) return <Loading>Loading...</Loading>
     return(
         <Wrapper>
           <CardsWrap>
@@ -62,10 +62,9 @@ const Landing = () => {
 const Wrapper = styled.main`
   width: 100%;
   display: flex;
-  padding: 20px 3rem;
+  padding: 30px 3rem;
   flex-direction: column;
   align-items: center;
-  border:solid 1px red;
 `
 
 const CardsWrap = styled.section`
@@ -73,14 +72,10 @@ const CardsWrap = styled.section`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  border:solid 1px red;
 `
-
-
 
 const PaginationWrap = styled.section`
   width: 70%;
-  /* border: solid 1px red; */
   display: flex;
   justify-content: space-around;
   button {
@@ -99,6 +94,15 @@ const PaginationWrap = styled.section`
       background-color: ${props => props.theme.interactive};
     }
   }
+`
+
+const Loading = styled.h1`
+  color: ${props => props.theme.gray};
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
 
 
