@@ -7,7 +7,7 @@ export const getPokemons = (url) => {
             
             resolve(res.data);
         } catch(err) {
-            reject(`faild... inside ${err}`)
+            reject(`Something went wrong... ${err}`)
         }
     })
 }

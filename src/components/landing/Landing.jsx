@@ -8,8 +8,9 @@ const Landing = () => {
     const [previousPage, setPreviousPage] = useState(null);
     const [currentPage, setCurrentPage] = useState('https://pokeapi.co/api/v2/pokemon');
     const [nextPage, setNextPage] = useState(null);
+    const [pokemons, setPokemons] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [pokemons, setPokemons] = useState([]);
+    const [error, setError] = useState();
 
     useEffect(() => {
         let mounted = true
@@ -22,12 +23,12 @@ const Landing = () => {
               
               if(mounted){
                 const pokemonList = await Promise.all(res.results.map(i => getOnePokemon(i.url)));
-                console.log('!!!:',pokemonList)
                 setPokemons(pokemonList);
                 setLoading(false)
               }
             }catch(err) {
-              console.log(err)
+              console.log('E:',err)
+              setError(err);
             }
           }
         loadPokemons()
@@ -44,11 +45,16 @@ const Landing = () => {
     
     }
 
-    if(loading) return <Loading>Loading...</Loading>
+    if(error) {
+      return <Loading>{error}</Loading>
+    } else if(loading){
+      return <Loading>Loading...</Loading>
+    }
+    
     return(
         <Wrapper>
           <CardsWrap>
-            {!loading && pokemons.map(pokemon => <Card key={pokemon.id} pokemon={pokemon}>{pokemon.name}</Card>)}
+            {!loading && pokemons?.map(pokemon => <Card key={pokemon.id} pokemon={pokemon}>{pokemon.name}</Card>)}
           </CardsWrap>
           <PaginationWrap>
             {!loading && previousPage && <button onClick={handlePrevious}>Previous</button>}

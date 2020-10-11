@@ -12,14 +12,14 @@ const Global = createGlobalStyle`
         letter-spacing: 0.07rem;
     }
     body, html{
-        width: 100vw;
-        height: 100vh;
         background-color: #F2F4F4;
         color: #21232B;
     }
     #root {
         width: 100%;
-        height: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 `
 export default Global;

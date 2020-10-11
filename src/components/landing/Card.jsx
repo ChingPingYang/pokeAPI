@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { capitalize } from '../../util/utilFuns';
 
@@ -6,7 +7,7 @@ const Card = ({pokemon}) => {
     const { id, name, sprites, types, height, weight } = pokemon;
     
     return (
-        <Wrapper>
+        <Wrapper to={`/pokemon/${id}`}>
             <ImgWrap type={types[0].type.name} typeDim={`${types[0].type.name}Dim`}>
                 <img src={sprites.front_default} alt={name}></img>
             </ImgWrap>
@@ -32,7 +33,11 @@ const Card = ({pokemon}) => {
     )
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+    top: 0px;
+    position: relative;
     height: 340px;
     flex-basis: 285px;
     display: flex;
@@ -40,6 +45,12 @@ const Wrapper = styled.div`
     border-radius: 20px;
     overflow: hidden;
     margin: 0px 10px 2rem 10px;
+    transition: 0.2s ease-in-out;
+    :hover {
+        top: -5px;
+        transition: 0.2s ease-in-out;
+        box-shadow: 0px 5px 26px -10px rgba(0,0,0,0.3);
+    }
 `
 const ImgWrap = styled.div`
     height: 40%;
