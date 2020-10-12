@@ -1,9 +1,11 @@
 import React , { useState, useEffect }from 'react';
-import { Link } from 'react-router-dom';
-import { getPokemons } from '../util/pokemonAPI';
+import { Link, withRouter } from 'react-router-dom';
+import { getPokemons } from '../../util/pokemonAPI';
 import styled from 'styled-components';
+import AutoComplete from './AutoComplete';
 
-const Nav = () => {
+const Nav = ({ history }) => {
+    
     const [search, setSearch] = useState("");
     const [match, setMatch] = useState([]);
 
@@ -19,11 +21,11 @@ const Nav = () => {
             }
         }
 
-        // if(search.length !== 0){
-        //     loadPokemons()
-        // } else {
-        //     setMatch([]);
-        // }
+        if(search.length !== 0){
+            loadPokemons()
+        } else {
+            setMatch([]);
+        }
         
     },[search]);
 
@@ -32,7 +34,10 @@ const Nav = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Sub')
+        const pokemon = match.filter( i => i.name === search);
+        if(pokemon.length < 1) return history.push('/404');
+        let url = pokemon[0].url.replace('https://pokeapi.co/api/v2/','');
+        return history.push(`/${url}`);
     }
     return (
         <Wrapper>
@@ -43,8 +48,7 @@ const Nav = () => {
                     <circle cx="8.5" cy="8.5" r="7.75" stroke="#FF328C" strokeWidth="1"/>
                     <path d="M14 14L21 21" stroke="#FF328C" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-
-                {match.length > 0 && match.map(pokemon => (<h1>{pokemon.name}</h1>))}
+                {match.length > 0 && <AutoComplete data={match} reset={setSearch} />}
             </form>
         </Wrapper>
     )
@@ -62,7 +66,6 @@ const Wrapper = styled.nav`
         position: absolute;
         left: 1rem;
         width: 90px;
-        /* border: solid 1px red; */
         img {
             width: 100%;
         }
@@ -92,4 +95,4 @@ const Wrapper = styled.nav`
 `
 
 
-export default Nav;
+export default withRouter(Nav);

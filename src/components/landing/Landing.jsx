@@ -48,7 +48,7 @@ const Landing = () => {
     if(error) {
       return <Loading>{error}</Loading>
     } else if(loading){
-      return <Loading>Loading...</Loading>
+      return <Loading>{`Loading... Please give me few seconds. :)`}</Loading>
     }
     
     return(

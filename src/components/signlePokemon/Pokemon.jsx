@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { capitalize, getSlideName } from '../../util/utilFuns';
 import Stats from './Stats';
 
-const Pokemon = ({ match: { params }}) => {
+const Pokemon = ({ match: { params }, history}) => {
     const [sprite, setSprite ] = useState(0);
     const [pokemon, setPokemon] = useState();
     const [loading ,setLoading] = useState(true);
@@ -17,8 +17,8 @@ const Pokemon = ({ match: { params }}) => {
                 const res = await getOnePokemon(`https://pokeapi.co/api/v2/pokemon/${params.id}`);
                 setPokemon(res);
                 setLoading(false);
-                console.log('go:',res)
             } catch(err) {
+                history.push('/404');
                 setError(err)
             }
         } 
@@ -28,7 +28,7 @@ const Pokemon = ({ match: { params }}) => {
         return () => {
             mounted = false
         }
-    }, []);
+    }, [params]);
 
     const handleSlide = (e) => {
         if(e.target.id === "next"){
@@ -53,7 +53,7 @@ const Pokemon = ({ match: { params }}) => {
     if(error) {
         return <Loading>{error}</Loading>
       } else if(loading){
-        return <Loading>Loading...</Loading>
+        return <Loading>{`Loading... Please give me few seconds. :)`}</Loading>
     }
 
     return (
@@ -61,8 +61,8 @@ const Pokemon = ({ match: { params }}) => {
             <ContentWrap >
                 <ImgWrap >
                     <img src={pokemon.sprites[getSlideName(sprite)]} alt={pokemon.name}></img>
-                    <button id="previous" className="slideNtn previous" onClick={handleSlide}>&#8592;</button>
-                    <button id="next" className="slideNtn next" onClick={handleSlide}>&#8594;</button>
+                    <button id="previous" className="slideBtn previous" onClick={handleSlide}>&#8592;</button>
+                    <button id="next" className="slideBtn next" onClick={handleSlide}>&#8594;</button>
                 </ImgWrap>
                 <h1>{capitalize(pokemon.name)}</h1>
                 {pokemon.types.map((type, index) => {
@@ -104,27 +104,31 @@ const ContentWrap = styled.div`
 `
 const ImgWrap = styled.div`
     height: 250px;
-    width: 90%;
+    width: 30rem;
     position: relative;
     display: inline-block;
     overflow: hidden;
     margin-top: -200px;
+    
     img {
         height: 16rem;
         transition: 1s ease-in-out;
     }
-    .slideNtn {
+    .slideBtn {
         all: unset;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         padding: 5px;
+        opacity: 0.9;
         color: ${props => props.theme.interactive};
         border-radius: 100%;
+        background-color: white;
         border: solid 1px ${props => props.theme.interactive};
         cursor: pointer;
         transition: 0.2s ease-in-out;
         :hover {
+            opacity: 1;
             color: white;
             background-color: ${props => props.theme.interactive};
         }
