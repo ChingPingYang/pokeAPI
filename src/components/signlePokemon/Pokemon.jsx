@@ -151,7 +151,6 @@ const ImgWrap = styled.div`
         color: ${props => props.theme.interactive};
         border-radius: 100%;
         background-color: white;
-        border: solid 1px ${props => props.theme.interactive};
         cursor: pointer;
         transition: 0.2s ease-in-out;
         :hover {
