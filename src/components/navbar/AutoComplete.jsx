@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { media } from '../../style/media';
  
 const AutoComplete = ({data, reset}) => {
     const history = useHistory();
@@ -34,6 +35,10 @@ const Wrapper = styled.section`
      position: absolute;
      top: 55px;
      z-index: 1000;
+     ${media.laptop_l}{
+        width: 15rem;
+        top: 65px;
+     }
     .select-box{
         width: 100%;
         max-height: 250px;

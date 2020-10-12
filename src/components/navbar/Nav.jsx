@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { getPokemons } from '../../util/pokemonAPI';
 import styled from 'styled-components';
 import AutoComplete from './AutoComplete';
+import { media } from '../../style/media';
 
 const Nav = ({ history }) => {
     
@@ -62,10 +63,22 @@ const Wrapper = styled.nav`
     justify-content: center;
     align-items: center;
     background-color: white;
+    ${media.laptop_l} {
+        min-height: 80px;
+    }
     .imageWrap{
         position: absolute;
         left: 1rem;
-        width: 90px;
+        width: 50px;
+        ${media.mobile_l} {
+            width: 70px;
+            ${media.tablet} {
+                width: 90px;
+                ${media.laptop_l} {
+                    width: 120px;
+                }
+            }
+        }
         img {
             width: 100%;
         }
@@ -78,6 +91,10 @@ const Wrapper = styled.nav`
         justify-content: space-around;
         align-items: center;
         border: solid 1px ${props => props.theme.interactive};
+
+        ${media.laptop_l}{
+            width: 15rem;
+        }
         input {
             margin-left: 2px;
             width: 75%;

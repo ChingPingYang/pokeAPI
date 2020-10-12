@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { media } from './media';
 
 
 const Global = createGlobalStyle`
@@ -14,10 +15,21 @@ const Global = createGlobalStyle`
     body, html{
         background-color: #F2F4F4;
         color: #21232B;
+        font-size: 14px;
+        ${media.mobile_l} {
+            font-size: 15px;
+
+            ${media.tablet} {
+                font-size: 17px;
+            }
+            ${media.laptop_l} {
+                font-size: 20px;
+            }
+        }
     }
     #root {
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
     }

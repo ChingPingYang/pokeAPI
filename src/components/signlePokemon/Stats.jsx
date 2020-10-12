@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { media } from '../../style/media';
 
 const Stats = ({pokemon}) => {
     return (
@@ -51,13 +52,18 @@ const Stats = ({pokemon}) => {
 
 const Wrapper = styled.div`
     width: 100%;
-    padding: 0px 10px;
+    padding: 0px 1rem;
+    display: flex;
+    flex-direction: column;
+    ${media.tablet} {
+        padding: 0px 2rem;
+    }
 `
 const BasicWrap = styled.div`
     width: 100%;
     height: 20px;
     display: flex;
-    margin-bottom:30px;
+    margin-bottom:25px;
     .box {
         flex:1;
         display: flex;
@@ -98,6 +104,7 @@ const AbilitiesWrap = styled.div`
         font-style: italic;
         text-decoration: underline; 
         color: ${props => props.theme[props.type]};
+        
     }
     h4{
         bottom: 15px;
