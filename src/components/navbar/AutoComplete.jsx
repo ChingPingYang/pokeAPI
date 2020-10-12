@@ -22,7 +22,7 @@ const AutoComplete = ({data, reset}) => {
                     return (
                         <div className="option" key={index}>
                             <label htmlFor={pokemon.name} onClick={handleOnclick} >{capitalize(pokemon.name)}</label>
-                            <input type="radio" name="autocomplete" id={pokemon.name} />
+                            <input type="radio" name="autocomplete" id={pokemon.name} />    
                         </div>
                     )
                 })}
@@ -59,7 +59,10 @@ const Wrapper = styled.section`
                 position: absolute;
                 top: -100px;
             }
-
+            :focus-within {
+                color: white;
+                background-color: ${props => props.theme.interactive};
+            }
             :hover{
                 color: white;
                 background-color: ${props => props.theme.interactive};

@@ -61,7 +61,7 @@ const ImgWrap = styled.div`
     img {
         height: 115%;
         margin-top: 20px;
-        z-index: 1000;
+        z-index: 100;
     }
 `
 const ContentWrap = styled.div`

@@ -16,7 +16,6 @@ const Nav = ({ history }) => {
                 const res = await getPokemons(`https://pokeapi.co/api/v2/pokemon?limit=1050`);
                 const pokemonList = res.results.filter(pokemon => pokemon.name.includes(search.toLocaleLowerCase()));
                 setMatch(pokemonList)
-                console.log(pokemonList)
             } catch(err) {
                 console.log(err);
             }
@@ -90,8 +89,9 @@ const Wrapper = styled.nav`
         display: flex;
         justify-content: space-around;
         align-items: center;
+        background-color: white;
         border: solid 1px ${props => props.theme.interactive};
-
+        z-index: 1000;
         ${media.laptop_l}{
             width: 15rem;
         }
